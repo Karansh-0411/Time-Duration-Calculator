@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Duration Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        input {
+            margin: 10px;
+            padding: 5px;
+        }
+        button {
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+        #output {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h2>Ignore-O-Meter 😠😡</h2>
+    <h3>Check how long you have been ignored 😐😐</h3>
+    <label>Start Time:</label>
+    <input type="datetime-local" id="startTime">
+    <label>End Time:</label>
+    <input type="datetime-local" id="endTime">
+    <button onclick="calculateDuration()">Calculate</button>
+    <div id="output"></div>
+
+    <script>
+        function calculateDuration() {
+            let start = new Date(document.getElementById('startTime').value);
+            let end = new Date(document.getElementById('endTime').value);
+            
+            if (isNaN(start) || isNaN(end) || start >= end) {
+                document.getElementById('output').innerHTML = "Please enter valid times.";
+                return;
+            }
+
+            let diff = (end - start) / 1000; // Difference in seconds
+            let days = Math.floor(diff / (24 * 3600));
+            diff %= (24 * 3600);
+            let hours = Math.floor(diff / 3600);
+            diff %= 3600;
+            let minutes = Math.floor(diff / 60);
+            let seconds = diff % 60;
+
+            let floatDays = (end - start) / (1000 * 60 * 60 * 24);
+            let floatHours = (end - start) / (1000 * 60 * 60);
+            let floatMinutes = (end - start) / (1000 * 60);
+            let floatSeconds = (end - start) / 1000;
+
+            document.getElementById('output').innerHTML = `
+                ${days} days ${hours} hours ${minutes} minutes ${seconds} seconds <br>
+                ${floatDays.toFixed(4)} days <br>
+                ${floatHours.toFixed(4)} hours <br>
+                ${floatMinutes.toFixed(4)} minutes <br>
+                ${floatSeconds.toFixed(4)} seconds
+            `;
+        }
+    </script>
+</body>
+</html>
